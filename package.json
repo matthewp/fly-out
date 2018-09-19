@@ -1,5 +1,5 @@
 {
-  "name": "fly-out",
+  "name": "@matthewp/fly-out",
   "version": "1.0.0",
   "description": "A fly-out (aka drop-down) web component",
   "main": "fly-out.js",
