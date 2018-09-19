@@ -8,6 +8,7 @@ function template(label) {
 
       .menu {
         display: none;
+        position: absolute;
       }
 
       .menu.open {
@@ -17,8 +18,11 @@ function template(label) {
       button {
         cursor: pointer;
         border: none;
-        font-size: 12px;
+        font-size: var(--button-font-size, 12px);
+        color: var(--button-color);
+        padding: var(--button-padding, 2px 6px 3px);
         outline: none;
+        background-color: var(--button-background-color);
       }
     </style>
     <div class="has-submenu">
@@ -122,6 +126,7 @@ class FlyOut extends HTMLElement {
     if(!this._isExpanded) {
       this._menu.classList.add('open');
       this._submenu.setAttribute('aria-expanded', 'true');
+      this.setAttribute('open', '');
       this._isExpanded = true;
     }
   }
@@ -130,6 +135,7 @@ class FlyOut extends HTMLElement {
     if(this._isExpanded) {
       this._menu.classList.remove('open');
       this._submenu.setAttribute('aria-expanded', 'false');
+      this.removeAttribute('open');
       this._isExpanded = false;
     }
   }

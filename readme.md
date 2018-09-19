@@ -21,6 +21,27 @@ Use directly from unpkg:
 <script type="module" src="https://unpkg.com/@matthewp/fly-out/fly-out.js"></script>
 ```
 
+## Styling
+
+The `<button>` that the fly-out menu displays can be styled by providing the following CSS variables:
+
+```css
+fly-out {
+  --button-background-color: #f4511e;
+  --button-font-size: 1em;
+  --button-padding: 12px 16px;
+  --button-color: white;
+}
+```
+
+When the menu is open a boolean `open` attribute is added to the element. This can be used to customize any of the above values while the menu is open. For example:
+
+```css
+fly-out[open] {
+  --button-background-color: grey;
+}
+```
+
 ## License
 
 [BSD 2 Clause](https://opensource.org/licenses/BSD-2-Clause)

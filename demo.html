@@ -2,8 +2,47 @@
 <html lang="en">
 <title>&lt;fly-out&gt;</title>
 
+<style>
+  .menu {
+    padding: 0;
+    margin: 0;
+    background-color: #f1f1f1;
+    list-style-type: none;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    min-width: 160px;
+  }
+
+  .menu a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+
+  .menu a:hover {background-color: #ddd;}
+
+  fly-out {
+    --button-background-color: #f4511e;
+    --button-font-size: 1em;
+    --button-padding: 12px 16px;
+    --button-color: white;
+  }
+
+  fly-out[open] {
+    --button-background-color: grey;
+  }
+
+  main {
+    display: flex;
+  }
+
+  main > * {
+    flex: 1;
+  }
+</style>
+
 <fly-out label="Menu">
-  <ul>
+  <ul class="menu">
     <li><a href="#">Item 1</a></li>
     <li><a href="#">Item 2</a></li>
     <li><a href="#">Item 3</a></li>
@@ -12,8 +51,24 @@
   </ul>
 </fly-out>
 
-<h1>Page</h1>
-<h2>Current: <span id="current-page"></span></h2>
+<main>
+  <div class="content-1">
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sollicitudin quam et mi ultricies rutrum. Phasellus placerat ex et pulvinar congue. Vivamus sed feugiat eros. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam sed molestie urna. Proin condimentum tellus orci. Fusce ut nisl mattis, dapibus justo eget, faucibus metus. Nunc laoreet ullamcorper nibh a convallis.</p>
+
+    <p>Proin non euismod arcu. Pellentesque faucibus, leo eu varius bibendum, metus quam ornare lorem, at pellentesque diam sapien nec quam. Curabitur pharetra bibendum odio nec sagittis. Aenean metus enim, gravida a enim vitae, elementum fermentum lectus. Donec nec diam enim. Interdum et malesuada fames ac ante ipsum primis in faucibus. Duis nec orci lectus. Ut nec luctus eros.</p>
+      
+    <p>Fusce vitae eros nec libero placerat posuere. Nam ac velit id quam porta feugiat in sed lacus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed interdum mauris ut luctus tristique. Proin tincidunt porta tellus, vel auctor tellus varius et. Proin non consequat risus, non rhoncus lorem. Donec ut magna lorem. Maecenas sed tellus a purus molestie tempor ut nec ex. Etiam arcu tellus, mattis vel risus id, consequat elementum sem. Donec vel scelerisque nunc. Donec viverra porttitor blandit. Vivamus orci ipsum, pellentesque a arcu at, fringilla mollis tellus.</p>
+      
+    <p>Donec nec semper turpis, sit amet convallis diam. Quisque aliquam efficitur tincidunt. Curabitur faucibus eleifend ipsum, vel varius metus vestibulum id. Pellentesque non congue ligula. Curabitur ac accumsan magna. Proin convallis, nibh vitae tristique vestibulum, ipsum ligula tincidunt justo, sit amet dignissim sapien enim sed nibh. Donec id magna euismod, egestas lectus eu, lobortis urna. Sed vitae orci imperdiet, auctor dolor sit amet, vehicula felis. Nulla facilisi. Vivamus sed blandit purus.</p>
+  
+    <p>Quisque neque mi, blandit sed suscipit volutpat, pretium nec sapien. Donec euismod luctus nulla tempus euismod. Maecenas magna magna, aliquam vel luctus eget, semper et diam. Pellentesque id justo ut augue efficitur tempor. Nulla eget erat eu orci accumsan tincidunt. Curabitur sem quam, cursus id congue ut, aliquam vel massa. Nunc id sapien in neque dignissim dignissim. Nullam augue nisl, tempus eu maximus in, molestie nec nibh.</p>
+  </div>
+
+  <div class="content-2">
+      <h1>Page</h1>
+      <h2>Current: <span id="current-page"></span></h2>
+  </div>
+</main>
 
 <script type="module">
   import './fly-out.js';
