@@ -9,7 +9,7 @@ A fly-out (aka drop-down) menu with the following features:
 
 Use directly from unpkg:
 
-```js
+```html
 <fly-out label="Menu">
   <ul>
     <li><a href="/home">Homepage</a></li>
