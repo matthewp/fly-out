@@ -1,14 +1,22 @@
 
-function template(label) {
+function template(label, caret, align) {
   return `
     <style>
       :host {
         display: inline-block;
       }
 
+      .has-submenu {
+        position: relative;
+      }
+
       .menu {
         display: none;
         position: absolute;
+      }
+
+      .menu.menu-right {
+        right: 0;
       }
 
       .menu.open {
@@ -24,11 +32,28 @@ function template(label) {
         outline: none;
         background-color: var(--button-background-color);
       }
+      
+      slot[name=button] {
+        display: inline-block;
+        vertical-align: middle;
+      }
+
+      .dropdown-caret {
+        display: inline-block;
+        border: 4px solid;
+        border-right-color: transparent;
+        border-bottom-color: transparent;
+        border-left-color: transparent;
+      }
     </style>
-    <div class="has-submenu">
-      <button type="button" aria-haspopup="true"
-        aria-expanded="false" class="has-submenu">${label}</button>
-      <slot class="menu"></slot>
+    <div class="has-submenu" aria-haspopup="true" aria-expanded="false">
+      <button type="button" class="has-submenu">
+        <slot name="button">${label}</slot>
+        ${caret ? '<span class="dropdown-caret"></span>' : ''}
+      </button>
+      <slot name="menu" class="menu menu-${align}">
+        <slot></slot>
+      </slot>
     </div>
   `;
 }
@@ -51,8 +76,10 @@ class FlyOut extends HTMLElement {
     if(!this._hasSetup) {
       this._hasSetup = true;
 
-      let label = this.getAttribute('label');
-      this.shadowRoot.innerHTML = template(label);
+      let label = this.getAttribute('label') || '';
+      let caret = this.hasAttribute('caret');
+      let align = this.getAttribute('align') || 'left';
+      this.shadowRoot.innerHTML = template(label, caret, align);
 
       let root = this.shadowRoot;
       this._menu = root.querySelector('.menu');
@@ -73,7 +100,7 @@ class FlyOut extends HTMLElement {
   handleEvent(ev) {
     switch(ev.type) {
       case 'click':
-        if(ev.target === this._btn) {
+        if(ev.currentTarget === this._btn) {
           ev.preventDefault();
           ev.stopPropagation();
           if(!this._isExpanded) {

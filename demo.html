@@ -21,35 +21,76 @@
 
   .menu a:hover {background-color: #ddd;}
 
-  fly-out {
+  .main-menu {
     --button-background-color: #f4511e;
     --button-font-size: 1em;
     --button-padding: 12px 16px;
     --button-color: white;
   }
 
-  fly-out[open] {
+  .main-menu[open] {
     --button-background-color: grey;
+  }
+
+  body {
+    margin: 0;
   }
 
   main {
     display: flex;
+    padding: 1em;
   }
 
   main > * {
     flex: 1;
   }
+
+  header {
+    background-color: #172A3A;
+    padding: 0.6em;
+    display: flex;
+    flex-direction: row;
+  }
+
+  header > * {
+    flex: 1;
+  }
+
+  .right-content {
+    align-self: center;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .user-menu {
+    --button-font-size: 1em;
+    --button-color: white;
+  }
 </style>
 
-<fly-out label="Menu">
-  <ul class="menu">
-    <li><a href="#">Item 1</a></li>
-    <li><a href="#">Item 2</a></li>
-    <li><a href="#">Item 3</a></li>
-    <li><a href="#">Item 4</a></li>
-    <li><a href="#">Item 5</a></li>
-  </ul>
-</fly-out>
+<header>
+  <div class="left-content">
+    <fly-out class="main-menu" label="Menu">
+      <ul class="menu">
+        <li><a href="#">Item 1</a></li>
+        <li><a href="#">Item 2</a></li>
+        <li><a href="#">Item 3</a></li>
+        <li><a href="#">Item 4</a></li>
+        <li><a href="#">Item 5</a></li>
+      </ul>
+    </fly-out>
+  </div>
+  
+  <div class="right-content">
+    <fly-out class="user-menu" caret align="right">
+      <img alt="@matthewp" slot="button" src="https://avatars0.githubusercontent.com/u/361671?s=40&amp;v=4" height="20" width="20">
+      <ul class="menu" slot="menu">
+        <li><a href="#">Item 1</a></li>
+        <li><a href="#">Item 2</a></li>
+      </ul>
+    </fly-out>
+  </div>
+</header>
 
 <main>
   <div class="content-1">
