@@ -14,6 +14,7 @@ function template(label) {
         cursor: pointer;
         border: none;
         font-size: 12px;
+        outline: none;
       }
     </style>
     <div class="has-submenu">
@@ -54,27 +55,28 @@ class FlyOut extends HTMLElement {
 
   connectedCallback() {
     this._setup();
-
-    if(this.hasAttribute('hover')) {
-      this._btn.addEventListener('mouseenter', this);
-      this._submenu.addEventListener('mouseleave', this);
-    } else {
-      this._btn.addEventListener('click', this);
-    }
-    this._btn.addEventListener('keyup', this);
+    this._registerEvents();
   }
 
   disconnectedCallback() {
-    this._btn.removeEventListener('mouseenter', this);
-    this._btn.removeEventListener('click', this);
-    this._btn.removeEventListener('keyup', this);
-    this._submenu.removeEventListener('mouseleave', this);
+    this._unregisterEvents();
   }
 
   handleEvent(ev) {
     switch(ev.type) {
       case 'click':
-        notImplemented();
+        if(ev.target === this._btn) {
+          ev.preventDefault();
+          ev.stopPropagation();
+          if(!this._isExpanded) {
+            this._makeExpanded();
+          } else {
+            this._makeClosed();
+          }
+        } else {
+          this._makeClosed();
+        }
+        break;
       case 'mouseenter':
         this._makeExpanded();
         break;
@@ -91,6 +93,25 @@ class FlyOut extends HTMLElement {
         }
         break;
     }
+  }
+
+  _registerEvents() {
+    if(this.hasAttribute('hover')) {
+      this._btn.addEventListener('mouseenter', this);
+      this._submenu.addEventListener('mouseleave', this);
+    } else {
+      this._btn.addEventListener('click', this, true);
+    }
+    this._btn.addEventListener('keyup', this);
+    this.ownerDocument.body.addEventListener('click', this);
+  }
+
+  _unregisterEvents() {
+    this._btn.removeEventListener('mouseenter', this);
+    this._btn.removeEventListener('click', this, true);
+    this._btn.removeEventListener('keyup', this);
+    this._submenu.removeEventListener('mouseleave', this);
+    this.ownerDocument.body.addEventListener('click', this);
   }
 
   _makeExpanded() {
