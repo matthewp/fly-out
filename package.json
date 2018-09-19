@@ -1,7 +1,7 @@
 {
   "name": "fly-out",
   "version": "1.0.0",
-  "description": "",
+  "description": "A fly-out (aka drop-down) web component",
   "main": "fly-out.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,9 +10,12 @@
     "type": "git",
     "url": "git+https://github.com/matthewp/fly-out.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "files": [
+    "fly-out.js"
+  ],
+  "keywords": ["web-component", "drop-down"],
+  "author": "Matthew Phillips",
+  "license": "BSD-2-Clause",
   "bugs": {
     "url": "https://github.com/matthewp/fly-out/issues"
   },
