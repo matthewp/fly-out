@@ -18,7 +18,7 @@ Use directly from unpkg:
   </ul>
 </fly-out>
 
-<script type="module" src="https://unpkg.com/fly-out/fly-out.js"></script>
+<script type="module" src="https://unpkg.com/@matthewp/fly-out/fly-out.js"></script>
 ```
 
 ## License
