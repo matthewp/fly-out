@@ -2,6 +2,10 @@
 function template(label) {
   return `
     <style>
+      :host {
+        display: inline-block;
+      }
+
       .menu {
         display: none;
       }
