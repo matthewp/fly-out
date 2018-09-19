@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<title>&lt;fly-out&gt;</title>
+
+<fly-out label="Menu" hover>
+  <ul>
+    <li><a href="#">Item 1</a></li>
+    <li><a href="#">Item 2</a></li>
+    <li><a href="#">Item 3</a></li>
+    <li><a href="#">Item 4</a></li>
+    <li><a href="#">Item 5</a></li>
+  </ul>
+</fly-out>
+
+<h1>Page</h1>
+<h2>Current: <span id="current-page"></span></h2>
+
+<script type="module">
+  import './fly-out.js';
+
+  function updateUI(el) {
+    document.querySelector('#current-page').textContent = el.textContent;
+  }
+
+  document.querySelector('fly-out ul').addEventListener('click', ev => {
+    if(ev.target.tagName === 'A') {
+      ev.preventDefault();
+      updateUI(ev.target);
+    }
+  });
+</script>
