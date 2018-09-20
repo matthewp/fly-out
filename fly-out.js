@@ -29,8 +29,11 @@ function template(label, caret, align) {
         font-size: var(--button-font-size, 12px);
         color: var(--button-color);
         padding: var(--button-padding, 2px 6px 3px);
-        outline: none;
         background-color: var(--button-background-color);
+      }
+
+      .has-submenu:not(.keyboard) button {
+        outline: none;
       }
       
       slot[name=button] {
@@ -58,11 +61,48 @@ function template(label, caret, align) {
   `;
 }
 
-function notImplemented() {
-  throw new Error('Not yet implemented');
+function tabState(window, cb) {
+  function onTab(ev) {
+    if (ev.keyCode === 9) {
+      window.removeEventListener('keydown', onTab);
+      window.addEventListener('mousedown', onMouseDown, { once: true });
+      cb(true);
+    }
+  }
+
+  function onMouseDown() {
+    window.addEventListener('keydown', onTab);
+    cb(false);
+  }
+
+  window.addEventListener('keydown', onTab);
+  return function() {
+    window.removeEventListener('keydown', onTab);
+    window.removeEventListener('mousedown', onMouseDown);
+  };
 }
 
 class FlyOut extends HTMLElement {
+  static _addInstance(el) {
+    this._instances.add(el);
+    if(this._instances.size === 1) {
+      this._stopListening = tabState(el.ownerDocument.defaultView, this._onStateChange);
+    }
+  }
+
+  static _removeInstance(el) {
+    this._instances.delete(el);
+    if(this._instances.size === 0) {
+      this._stopListening();
+    }
+  }
+
+  static _onStateChange(usingKeyboard) {
+    for(let el of FlyOut._instances) {
+      el._tabStateChange(usingKeyboard);
+    }
+  }
+
   constructor() {
     super();
     this.attachShadow({mode: 'open'});
@@ -91,10 +131,12 @@ class FlyOut extends HTMLElement {
   connectedCallback() {
     this._setup();
     this._registerEvents();
+    FlyOut._addInstance(this);
   }
 
   disconnectedCallback() {
     this._unregisterEvents();
+    FlyOut._removeInstance(this);
   }
 
   handleEvent(ev) {
@@ -117,16 +159,6 @@ class FlyOut extends HTMLElement {
         break;
       case 'mouseleave':
         this._makeClosed();
-      case 'keyup':
-        let k = ev.keyCode;
-        if(k === 32 || k === 13) {
-          if(this._isExpanded) {
-            this._makeClosed();
-          } else {
-            this._makeExpanded();
-          }
-        }
-        break;
     }
   }
 
@@ -166,6 +198,13 @@ class FlyOut extends HTMLElement {
       this._isExpanded = false;
     }
   }
+
+  _tabStateChange(usingKeyboard) {
+    this._submenu.classList[usingKeyboard ? 'add' : 'remove']('keyboard');
+  }
 }
+
+FlyOut._instances = new Set();
+FlyOut._stopListening = null;
 
 customElements.define('fly-out', FlyOut);
