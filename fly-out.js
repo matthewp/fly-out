@@ -103,10 +103,15 @@ class FlyOut extends HTMLElement {
     }
   }
 
+  static get observedAttributes() {
+    return ['label'];
+  }
+
   constructor() {
     super();
     this.attachShadow({mode: 'open'});
 
+    this._label = this.getAttribute('label') || '';
     this._menu = null;
     this._hasSetup = false;
     this._isExpanded = false;
@@ -116,7 +121,7 @@ class FlyOut extends HTMLElement {
     if(!this._hasSetup) {
       this._hasSetup = true;
 
-      let label = this.getAttribute('label') || '';
+      let label = this._label;
       let caret = this.hasAttribute('caret');
       let align = this.getAttribute('align') || 'left';
       this.shadowRoot.innerHTML = template(label, caret, align);
@@ -125,6 +130,7 @@ class FlyOut extends HTMLElement {
       this._menu = root.querySelector('.menu');
       this._submenu = root.querySelector('.has-submenu');
       this._btn = root.querySelector('button');
+      this._slotBtn = root.querySelector('slot[name="button"]');
     }
   }
 
@@ -137,6 +143,21 @@ class FlyOut extends HTMLElement {
   disconnectedCallback() {
     this._unregisterEvents();
     FlyOut._removeInstance(this);
+  }
+
+  attributeChangedCallback(attrName, oldValue, newValue) {
+    this[attrName] = newValue;
+  }
+
+  get label() {
+    return this._label;
+  }
+
+  set label(val) {
+    this._label = val;
+    if(this._slotBtn) {
+      this._slotBtn.firstChild.data = val;
+    }
   }
 
   handleEvent(ev) {
@@ -208,3 +229,5 @@ FlyOut._instances = new Set();
 FlyOut._stopListening = null;
 
 customElements.define('fly-out', FlyOut);
+
+export default FlyOut;
