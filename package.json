@@ -1,6 +1,6 @@
 {
   "name": "@matthewp/fly-out",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "description": "A fly-out (aka drop-down) web component",
   "main": "fly-out.js",
   "scripts": {
@@ -13,7 +13,10 @@
   "files": [
     "fly-out.js"
   ],
-  "keywords": ["web-component", "drop-down"],
+  "keywords": [
+    "web-component",
+    "drop-down"
+  ],
   "author": "Matthew Phillips",
   "license": "BSD-2-Clause",
   "bugs": {
