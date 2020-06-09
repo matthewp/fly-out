@@ -69,22 +69,22 @@ By default the dropdown will be aligned to the *left* of the button. If you woul
 
 ### Styling
 
-The `<button>` that the fly-out menu displays can be styled by providing the following CSS variables:
+The `<button>` that the fly-out menu displays can be styled as a `part::(button)` like so:
 
 ```css
-fly-out {
-  --button-background-color: #f4511e;
-  --button-font-size: 1em;
-  --button-padding: 12px 16px;
-  --button-color: white;
+fly-out::part(button) {
+  background-color: #f4511e;
+  font-size: 1em;
+  padding: 12px 16px;
+  color: white;
 }
 ```
 
 When the menu is open a boolean `open` attribute is added to the element. This can be used to customize any of the above values while the menu is open. For example:
 
 ```css
-fly-out[open] {
-  --button-background-color: grey;
+fly-out[open]::part(button) {
+  background-color: grey;
 }
 ```
 

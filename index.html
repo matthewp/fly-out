@@ -3,6 +3,10 @@
 <title>&lt;fly-out&gt;</title>
 
 <style>
+  fly-out:not(:defined) {
+    display: none;
+  }
+
   .menu {
     padding: 0;
     margin: 0;
@@ -21,15 +25,15 @@
 
   .menu a:hover {background-color: #ddd;}
 
-  .main-menu {
-    --button-background-color: #f4511e;
-    --button-font-size: 1em;
-    --button-padding: 12px 16px;
-    --button-color: white;
+  .main-menu::part(button) {
+    background-color: #f4511e;
+    font-size: 1em;
+    padding: 12px 16px;
+    color: white;
   }
 
-  .main-menu[open] {
-    --button-background-color: grey;
+  .main-menu[open]::part(button) {
+    background-color: grey;
   }
 
   body {
@@ -50,6 +54,7 @@
     padding: 0.6em;
     display: flex;
     flex-direction: row;
+    min-height: 42px;
   }
 
   header > * {
@@ -62,9 +67,9 @@
     justify-content: flex-end;
   }
 
-  .user-menu {
-    --button-font-size: 1em;
-    --button-color: white;
+  .user-menu::part(button) {
+    font-size: 1em;
+    color: white;
   }
 </style>
 
