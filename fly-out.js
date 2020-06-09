@@ -1,6 +1,6 @@
 
 function template(label, caret, align) {
-  return `
+  return /* html */ `
     <style>
       :host {
         display: inline-block;
@@ -26,10 +26,9 @@ function template(label, caret, align) {
       button {
         cursor: pointer;
         border: none;
-        font-size: var(--button-font-size, 12px);
-        color: var(--button-color);
-        padding: var(--button-padding, 2px 6px 3px);
-        background-color: var(--button-background-color);
+        font-size: 12px;
+        padding: 2px 6px 3px;
+        background-color: transparent;
       }
 
       .has-submenu:not(.keyboard) button {
@@ -50,7 +49,7 @@ function template(label, caret, align) {
       }
     </style>
     <div class="has-submenu" aria-haspopup="true" aria-expanded="false">
-      <button type="button" class="has-submenu">
+      <button type="button" class="has-submenu" part="button">
         <slot name="button">${label}</slot>
         ${caret ? '<span class="dropdown-caret"></span>' : ''}
       </button>
@@ -82,7 +81,7 @@ function tabState(window, cb) {
   };
 }
 
-class FlyOut extends HTMLElement {
+class FlyOutElement extends HTMLElement {
   static _addInstance(el) {
     this._instances.add(el);
     if(this._instances.size === 1) {
@@ -137,15 +136,15 @@ class FlyOut extends HTMLElement {
   connectedCallback() {
     this._setup();
     this._registerEvents();
-    FlyOut._addInstance(this);
+    this.constructor._addInstance(this);
   }
 
   disconnectedCallback() {
     this._unregisterEvents();
-    FlyOut._removeInstance(this);
+    this.constructor._removeInstance(this);
   }
 
-  attributeChangedCallback(attrName, oldValue, newValue) {
+  attributeChangedCallback(attrName, _, newValue) {
     this[attrName] = newValue;
   }
 
@@ -225,9 +224,9 @@ class FlyOut extends HTMLElement {
   }
 }
 
-FlyOut._instances = new Set();
-FlyOut._stopListening = null;
+FlyOutElement._instances = new Set();
+FlyOutElement._stopListening = null;
 
-customElements.define('fly-out', FlyOut);
+customElements.define('fly-out', FlyOutElement);
 
-export default FlyOut;
+export default FlyOutElement;
