@@ -1,6 +1,6 @@
 {
   "name": "@matthewp/fly-out",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "A fly-out (aka drop-down) web component",
   "main": "fly-out.js",
   "scripts": {
