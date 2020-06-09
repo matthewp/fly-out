@@ -48,7 +48,7 @@ function template(label, caret, align) {
         border-left-color: transparent;
       }
     </style>
-    <div class="has-submenu" aria-haspopup="true" aria-expanded="false">
+    <div class="has-submenu" aria-haspopup="true" aria-expanded="false" part="container">
       <button type="button" class="has-submenu" part="button">
         <slot name="button">${label}</slot>
         ${caret ? '<span class="dropdown-caret"></span>' : ''}
